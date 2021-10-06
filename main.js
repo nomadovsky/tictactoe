@@ -10,8 +10,8 @@ const Cell = (el) => {
 
   const renderValue = () => {
     state.cellValue === 1
-      ? (state.htmlElement.innerText = "X")
-      : (state.htmlElement.innerText = "O");
+      ? state.htmlElement.classList.add("X")
+      : state.htmlElement.classList.add("circle");
   };
   return { state, setCellValue, renderValue };
 };

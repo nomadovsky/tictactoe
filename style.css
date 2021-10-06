@@ -1,3 +1,23 @@
+@import url("https://fonts.googleapis.com/css2?family=Pacifico&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Lato&display=swap");
+
+:root {
+  --size-big: 200px;
+  --size-small: 150px;
+  --mark-size-big: calc(var(--size-big) * 0.9);
+  --mark-size-small: calc(var(--size-small) * 0.9);
+
+  --color-dark: #34355a;
+  --color-regular: #555a98;
+  --color-light: #6f74ae;
+  --color-contrast: #d41894;
+
+  --shadow-big: 0 0 4px #fff, 0 0 11px #fff, 0 0 19px #fff,
+    0 0 40px var(--color-contrast), 0 0 80px var(--color-contrast),
+    0 0 90px var(--color-contrast), 0 0 100px var(--color-contrast),
+    0 0 150px var(--color-contrast);
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -5,23 +25,31 @@
 }
 
 body {
-  background-color: black;
+  background-image: url(/background.svg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 100vh;
+  overflow: hidden;
+  font-family: "Lato", sans-serif;
 }
 
 .container {
   display: flex;
   justify-content: center;
 }
+
 .container h1 {
   position: absolute;
-  font-size: 3rem;
+  font-size: 5rem;
+  color: rgba(253, 253, 253, 0.685);
+  font-family: "Pacifico", cursive;
+  text-shadow: var(--shadow-big);
 }
 
 .board {
   height: 100vh;
-  width: 80vw;
-  background-image: linear-gradient(rgb(56, 56, 56), rgb(88, 88, 88));
-
+  width: 80%;
+  /* background-image: linear-gradient(rgb(56, 56, 56), rgb(88, 88, 88)); */
   column-gap: 5px;
   row-gap: 5px;
   justify-content: center;
@@ -30,34 +58,88 @@ body {
 
 .x3 {
   display: grid;
-  grid-template-columns: repeat(3, 200px);
-  grid-template-rows: repeat(3, 200px);
+  grid-template-columns: repeat(3, var(--size-big));
+  grid-template-rows: repeat(3, var(--size-big));
 }
 
 .x4 {
+  margin-top: 2rem;
   display: grid;
-  grid-template-columns: repeat(4, 200px);
-  grid-template-rows: repeat(4, 200px);
+  grid-template-columns: repeat(4, var(--size-small));
+  grid-template-rows: repeat(4, var(--size-small));
 }
 
 .cell {
-  width: 200px;
-  height: 200px;
-  background-color: rgb(189, 189, 189);
-  font-size: 15rem;
-  font-family: sans-serif;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  z-index: 3;
+  width: var(--size-big);
+  height: var(--size-big);
+  background-color: rgb(231, 231, 231, 0.7);
+  font-size: var(--mark-size-big);
+  display: grid;
+  place-items: center;
   cursor: pointer;
+  position: relative;
+}
+
+.x4 .cell {
+  width: var(--size-small);
+  height: var(--size-small);
+  font-size: var(--mark-size-small);
 }
 
 .cell:hover {
-  background-color: rgb(171, 241, 246);
+  background-color: var(--color-contrast);
+  background-blend-mode: lighten;
+
+  opacity: 0.9;
 }
 
-.circle {
-  background-color: orangered;
+.cell.circle {
+  background-color: var(--color-regular);
+  background-blend-mode: color-dodge;
+}
+.cell.circle::after {
+  content: "";
+  height: calc(var(--mark-size-big) * 0.7);
+  width: calc(var(--mark-size-big) * 0.7);
+  border-radius: 100%;
+  box-shadow: 0 0 0 20px white;
+}
+
+.x4 .cell.circle::after {
+  height: calc(var(--mark-size-small) * 0.7);
+  width: calc(var(--mark-size-small) * 0.7);
+}
+
+.cell.circle:hover {
+  opacity: 0.7;
+}
+
+.cell.X {
+  background-color: var(--color-contrast);
+  background-blend-mode: lighten;
+}
+
+.cell.X:after,
+.cell.X:before {
+  position: absolute;
+  content: "";
+  height: var(--mark-size-big);
+  width: calc(var(--mark-size-big) * 0.2);
+  background-color: #fff;
+}
+
+.x4 .cell.X:after,
+.x4 .cell.X:before {
+  height: var(--mark-size-small);
+  width: calc(var(--mark-size-small) * 0.2);
+}
+
+.cell.X:after {
+  transform: rotate(45deg);
+}
+.cell.X:before {
+  transform: rotate(-45deg);
 }
 
 .result {
@@ -70,13 +152,17 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  z-index: 5;
 }
 
 .result h2 {
   color: white;
+  text-shadow: var(--shadow-big);
 }
 
 .btn {
+  background-color: rgba(255, 255, 255, 0.8);
+  width: 10em;
   padding: 1em;
   margin-top: 2em;
   font-size: 0.4em;
@@ -85,7 +171,7 @@ body {
 }
 
 .btn:hover {
-  background-color: rgba(255, 255, 255, 0.8);
+  background-color: rgba(255, 255, 255);
   transform: scale(1.05);
 }
 
@@ -108,8 +194,6 @@ body {
 
 .content {
   font-size: 3rem;
-}
-.content h1 {
 }
 
 .buttons {
